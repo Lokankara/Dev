@@ -24,6 +24,7 @@ public class NumbersTutor {
      * @param number
      */
     public void covertNumbers(Number number) {
+        //TODO void covertNumbers(Number number)
     }
 
     /**
@@ -38,39 +39,39 @@ public class NumbersTutor {
 
         try {
             byte parseByte = Byte.parseByte(s);
-            log("Byte: " + parseByte);
+            log(String.format("Byte: %s", parseByte));
         } catch (NumberFormatException e) {
             log(message);
         }
         try {
             short parseShort = Short.parseShort(s);
-            log("Short: " + parseShort);
+            log(String.format("Short: %s", parseShort));
         } catch (NumberFormatException e) {
             log(message);
         }
         try {
             int parseInt = Integer.parseInt(s);
-            log("Integer: " + parseInt);
+            log(String.format("Integer: %d", parseInt));
         } catch (NumberFormatException e) {
             log(message);
         }
         try {
             long parseLong = Long.parseLong(s);
-            log("Long: " + parseLong);
+            log(String.format("Long: %d", parseLong));
         } catch (NumberFormatException e) {
             log(message);
         }
         try {
             float parseFloat = Float.parseFloat(s);
-            log("Float: " + parseFloat);
+            log(String.format("Float: %s", parseFloat));
         } catch (NumberFormatException e) {
             log(message);
         }
         try {
-            double wrappedDouble = Double.parseDouble(s);
-            log("Double: " + wrappedDouble);
+            double parseDouble = Double.parseDouble(s);
+            log(String.format("Double: %s", parseDouble));
         } catch (NumberFormatException e) {
-            log(message + s);
+            log(String.format("%s%s", message, s));
         }
     }
 

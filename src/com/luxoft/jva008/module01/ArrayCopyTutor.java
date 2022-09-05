@@ -15,7 +15,7 @@ import static com.luxoft.jva008.Logger.log;
  */
 public class ArrayCopyTutor {
     private int animals_capacity = 5;
-    private final static int animals_expand_by = 5;
+    private static final int animals_expand_by = 5;
     private int animals_size = 0;
     String[] animals = new String[animals_capacity];
 
@@ -50,14 +50,13 @@ public class ArrayCopyTutor {
 
     public void deleteAnimal(int position) {
         if (0 <= position && position <= --animals_size) {
-
             System.arraycopy(animals, position + 1, animals, position, animals_size - position + 1);
         }
     }
 
     public void showAnimals() {
         for (int i = 0; i < animals_size; i++) {
-            log(i + ") " + animals[i]);
+            log(String.format("%d: %s", i, animals[i]));
         }
     }
 

@@ -70,11 +70,11 @@ public class ObjectEqualsTutor {
         }
 
         public String getFullName() {
-            return this.name + " " + this.surname;
+            return String.format("%s %s", this.name, this.surname);
         }
 
         public String toString() {
-            return this.name + " " + this.surname + ", Age:" + age;
+            return String.format("%s %s, Age:%d", this.name, this.surname, age);
         }
 
         public boolean equals(Object o) {

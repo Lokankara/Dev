@@ -2,8 +2,6 @@ package com.luxoft.jva008.module01;
 
 import org.junit.Test;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -15,24 +13,21 @@ public class RegExpTutor {
     private String charRegEx = "a-zA-Z";
 
     public Email getEmail(String emailString) {
+
         Email email = new Email();
 
-        String regEx = "a-zA-Z0-9_!#$%&'*+/=?`{|}~^.-";
+        String regEx = String.format("%s0-9_!#$%%&'*+/=?`{|}~.-^", charRegEx);
 
-        String regexPattern = "^([" + regEx + "]{1,64})@([" + regEx + "]{1,64})\\.([" + charRegEx + "]{2,4})$";
+        String regexPattern = String.format("^([%s]{1,64})@([%s]{1,64})(\\.)([%s]{2,4})$", regEx, regEx, charRegEx);
 
-        Pattern pattern = Pattern.compile(regexPattern);
-
-        Matcher matcher = pattern.matcher(emailString);
+        Matcher matcher = match(regexPattern, emailString);
 
         if (matcher.find()) {
             email.name = matcher.group(1);
             email.domainName = matcher.group(2);
-            email.domainZone = matcher.group(3);
+            email.domainZone = matcher.group(4);
         }
-
         return email;
-
     }
 
     /**
@@ -43,18 +38,26 @@ public class RegExpTutor {
      */
     public String[] getAnimalsArray(String animalsString) {
 
-        ArrayCopyTutor tutor = new ArrayCopyTutor();
+        ArrayCopyTutor copy = new ArrayCopyTutor();
 
-        Pattern pattern = Pattern.compile(" ([" + charRegEx + "]{1,64})([\\.,])");
-        Matcher matcher = pattern.matcher(animalsString);
+        String regexPattern = String.format(" ([%s]{1,64})([\\.,])", charRegEx);
+
+        Matcher matcher = match(regexPattern, animalsString);
 
         while (matcher.find()) {
             String found = matcher.group(1);
-            tutor.addAnimal(found);
+            copy.addAnimal(found);
             log(found);
         }
-        return tutor.animals;
 
+        return copy.animals;
+    }
+
+    public static Matcher match(String pattern, String word) {
+
+        Pattern compile = Pattern.compile(pattern);
+
+        return compile.matcher(word);
     }
 
     @Test

@@ -42,7 +42,7 @@ public class ObjectToStringTutor {
 
 		@Override
 		public String toString() {
-			return "Employee{" +
+			return "Employee:{" +
 					"name='" + name + '\'' +
 					", surname='" + surname + '\'' +
 					", age=" + age +

@@ -2,6 +2,9 @@ package com.luxoft.jva008.module01;
 
 import org.junit.Test;
 
+import java.util.regex.Pattern;
+
+import static com.luxoft.jva008.module01.RegExpTutor.match;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -9,52 +12,43 @@ public class StringMatcherTest {
 
 	// Returns true if the string matches exactly "true"
 	public boolean isTrue(String s) {
-		// TODO cour code goes here
-		return false;
+		return Pattern.matches("true", s);
 	}
 
 	// Returns true if the string matches exactly "true" or "True"
 	public boolean isTrueVersion2(String s) {
-		// TODO cour code goes here
-		return false;
+		return Pattern.matches("[Tt]rue", s);
 	}
 
 	// Returns true if the string matches exactly "true" or "True"
 	// or "yes" or "Yes"
 	public boolean isTrueOrYes(String s) {
-		// TODO cour code goes here
-		return false;
+		return Pattern.matches("[Tt]rue|[Yy]es", s);
 	}
 
 	// Returns true if the string contains exactly "true"
 	public boolean containsTrue(String s) {
-		// TODO cour code goes here
-		return false;
+		return Pattern.matches(".+(true).+", s);
 	}
-
 
 	// Returns true if the string contains of three letters
 	public boolean isThreeLetters(String s) {
-		// TODO cour code goes here
-		return false;
+		return Pattern.matches("\\w{3}", s);
 	}
 
 	// Returns true if the string does not have a number at the beginning
 	public boolean isNoNumberAtBeginning(String s) {
-		// TODO cour code goes here
-		return false;
+		return Pattern.matches("^\\D.+", s);
 	}
 
 	// Returns true if the string contains a arbitrary number of characters except b
 	public boolean isIntersection(String s) {
-		// TODO cour code goes here
-		return false;
+		return !Pattern.matches(".+b.+", s);
 	}
 
 	// Returns true if the string contains a number less then 300
 	public boolean isLessThenThreeHundred(String s) {
-		// TODO cour code goes here
-		return false;
+		return Pattern.matches("[1-2]?[0-9][0-9]?", s);
 	}
 
 	@Test

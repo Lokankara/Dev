@@ -17,21 +17,21 @@ public class StringTutor {
         String s3 = new String("aaa");
         log("Address of the object s1: " + System.identityHashCode(s1));
         log("Address of the object s2: " + System.identityHashCode(s2));
-        assertEquals(s1 == s2, null);
-        assertEquals(s1.equals(s2), null);
+        assertEquals(s1 == s2, true);
+        assertEquals(s1.equals(s2), true);
         log("Address of the object s3: " + System.identityHashCode(s3));
-        assertEquals(s1 == s3, null);
+        assertEquals(s1 == s3, false);
         // The intern () method allows you to get a string from a row pool
         String s4 = s3.intern();
         log("Address of the object s4: " + System.identityHashCode(s4));
-        assertEquals(s1 == s4, null);
+        assertEquals(s1 == s4, true);
         // We test the re-creation of the object every time the
         s3 = s3 + "bbb";
         log("Address of the object s3: " + System.identityHashCode(s3));
         s3 = s3.substring(0, 3); // s3 again "aaa"
-        assertEquals(s3 == s1, null);
-        assertEquals(s3.equals(s1), null);
-        assertEquals(s3.intern() == s1, null);
+        assertEquals(s3 == s1, false);
+        assertEquals(s3.equals(s1), true);
+        assertEquals(s3.intern() == s1, true);
     }
 
     /**
@@ -87,7 +87,7 @@ public class StringTutor {
                 checkGreeting("Hello, peter Pan!"));
         assertFalse("The first letter of the surname must be the capital letter",
                 checkGreeting("Hi, Peter is the first!"));
-
-// assertFalse("In the beginning there should be a word Hello and a comma",checkGreeting("Hello, Peter Pan!"));
+        assertFalse("In the beginning there should be a word Hello and a comma",
+                checkGreeting("Hello Peter Pan!"));
     }
 }
