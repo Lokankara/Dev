@@ -8,7 +8,8 @@ public class PipedStreamsTutor {
 
 	public static void main(String[] args) {
 
-		try (PipedOutputStream out = new PipedOutputStream(); PipedInputStream in = new PipedInputStream(out)) {
+		try (PipedOutputStream out = new PipedOutputStream();
+			 PipedInputStream in = new PipedInputStream(out)) {
 			out.write('L');
 			out.write('U');
 			out.write('X');

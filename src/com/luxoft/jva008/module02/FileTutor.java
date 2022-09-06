@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 
+import static com.luxoft.jva008.Logger.log;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -18,17 +19,19 @@ public class FileTutor {
      */
     public void createFile() {
 
-        File dir = new File(PATH);
+        File[] fileMap = mapper();
 
-        boolean newDir = dir.mkdir();
+        boolean folder = fileMap[0].mkdir();
 
-        System.out.println(newDir);
-
-        File file = new File(PATH + "/" + FILE_NAME);
+        log(String.format("New Dir: %s", folder));
 
         try {
-            file.createNewFile();
+            boolean newFile = fileMap[1].createNewFile();
+
+            log(String.format("New File: %s", newFile));
+
         } catch (IOException e) {
+
             throw new RuntimeException(e);
         }
     }
@@ -37,7 +40,33 @@ public class FileTutor {
      * This method should remove the "test" folder and the "test/test.txt" file
      */
     public void deleteFile() {
+
+        File[] fileMap = mapper();
+
+        boolean deleteFile = fileMap[1].delete();
+
+        boolean deleteDir = fileMap[0].delete();
+
+        log(String.format("File deleted: %s", deleteFile));
+
+        log(String.format("Dir deleted: %s", deleteDir));
     }
+
+    private File[] mapper() {
+
+        File dir = new File(PATH);
+
+        File file = new File(PATH + "/" + FILE_NAME);
+
+        File[] array = {dir, file};
+
+        log(file.getAbsolutePath());
+
+        log(dir.getAbsolutePath());
+
+        return array;
+    }
+
 
     @Test
     public void testCreateFile() {
@@ -54,4 +83,3 @@ public class FileTutor {
         assertFalse(new File("test").exists());
     }
 }
-//TODO FileTutor

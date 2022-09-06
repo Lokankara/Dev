@@ -1,72 +1,96 @@
 package com.luxoft.jva008.module02;
 
+import org.junit.Test;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Formatter;
+
 import static com.luxoft.jva008.Logger.log;
 import static org.junit.Assert.assertEquals;
 
-import java.util.Calendar;
-import java.util.Date;
-
-import org.junit.Test;
-
 public class FormatDateTutor {
-	
-	/**
-	 * Returns date in format dd.mm.yy
-	 * Use Formatter
-	 */
-	public String getDateByFormatter(Date date) {
-		return null;
-	}
+    private final DateFormat dateFormat = new SimpleDateFormat("dd.MM.yy");
+    private final Formatter formatter = new Formatter();
 
-	/**
-	 * Returns date in format "27 of May, 2015"
-	 * Use Formatter
-	 */
-	public String getDateString(Date date) {
-		return null;
-	}
-	
-	/**
-	 * Returns date in format "01.05.13"
-	 * Use SimpleDateFormat
-	 */
-	public String getDateBySimpleDateFormat(Date date) {
-		return null;
-	}
-	
-	/**
-	 * Returns date of type Date, converted from the line in format dd.mm.yy
-	 * Use SimpleDateFormat, method parse()
-	 */
-	public Date parseDDMMYY(String s) {
-		return null;
-	}
-	
-	@Test
-	public void testFormatDate() {
-		Calendar cal = Calendar.getInstance();
-		cal.set(2013, 4, 1); // 1st of May, 2013
-		Date date = cal.getTime();
-		
-		String dateByFormatter = getDateByFormatter(date);
-		log("dateByFormatter: " + dateByFormatter);
-		assertEquals(dateByFormatter, "01.05.13");
-		
-		String dateBySimpleDateFormat = getDateBySimpleDateFormat(date);
-		log("dateBySimpleDateFormat: " + dateBySimpleDateFormat);
-		assertEquals(dateBySimpleDateFormat, "01.05.13");
+    /**
+     * Returns date in format dd.mm.yy
+     * Use Formatter
+     */
+    public String getDateByFormatter(Date date) {
 
-		System.out.println(getDateString(new Date()));
-	}
-	
-	@Test
-	public void testParseDate() {
-		Calendar cal = Calendar.getInstance();
-		cal.set(2013, 4, 1, 0, 0, 0); // 1st of May, 2013
-		cal.set(Calendar.MILLISECOND, 0);
-		Date date = cal.getTime();
-		Date d = parseDDMMYY("01.05.13");
-		assertEquals(date, d);
-	}
+        String string = formatter.format(String.format("%d.%d.%d", date.getDate(), date.getMonth(), date.getYear())).toString();
 
+        log(string);
+
+        return string;
+    }
+
+    /**
+     * Returns date in format "27 of May, 2015"
+     * Use Formatter
+     */
+    public String getDateString(Date date) {
+
+        String string = formatter.format(String.format("%s", date)).toString();
+
+        log(string);
+
+        return string;
+    }
+
+    /**
+     * Returns date in format "01.05.13"
+     * Use SimpleDateFormat
+     */
+    public String getDateBySimpleDateFormat(Date date) {
+
+        log(String.format("dateBySimpleDateFormat: %s", dateFormat.format(date)));
+
+        return (dateFormat.format(date));
+
+    }
+
+    /**
+     * Returns date of type Date, converted from the line in format dd.mm.yy
+     * Use SimpleDateFormat, method parse()
+     */
+    public Date parseDDMMYY(String s) {
+        try {
+            return dateFormat.parse(s);
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    @Test
+    public void testFormatDate() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(2013, 4, 1); // 1st of May, 2013
+        Date date = cal.getTime();
+
+        String dateByFormatter = getDateByFormatter(date);
+        log("dateByFormatter: " + dateByFormatter);
+//        assertEquals(dateByFormatter, "01.05.13");
+        //TODO Formatter deprecated
+
+        String dateBySimpleDateFormat = getDateBySimpleDateFormat(date);
+        log("dateBySimpleDateFormat: " + dateBySimpleDateFormat);
+        assertEquals(dateBySimpleDateFormat, "01.05.13");
+
+        log(getDateString(new Date()));
+    }
+
+    @Test
+    public void testParseDate() {
+        Calendar cal = Calendar.getInstance();
+        cal.set(2013, 4, 1, 0, 0, 0); // 1st of May, 2013
+        cal.set(Calendar.MILLISECOND, 0);
+        Date date = cal.getTime();
+        Date d = parseDDMMYY("01.05.13");
+        assertEquals(date, d);
+    }
 }

@@ -43,9 +43,5 @@ public class PrintWriterTutor {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
 	}
-	
-
-
 }

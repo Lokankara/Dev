@@ -19,16 +19,15 @@ public class DataStreamTutor {
      */
     public void writeToFile() {
 
+        try (FileOutputStream output = new FileOutputStream(FILES_TEST_PATH)) {
 
-        try (FileOutputStream outputStream = new FileOutputStream(FILES_TEST_PATH)) {
+            BufferedOutputStream buffered = new BufferedOutputStream(output);
 
-            BufferedOutputStream buffered = new BufferedOutputStream(outputStream);
+            DataOutputStream data = new DataOutputStream(buffered);
 
-            DataOutputStream dataOutput = new DataOutputStream(buffered);
+            data.writeUTF(TEST_LINE);
 
-            dataOutput.writeUTF(TEST_LINE);
-
-            dataOutput.close();
+            data.close();
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -42,15 +41,16 @@ public class DataStreamTutor {
      */
     public String readFromFile() {
 
-        try (FileInputStream inputStream = new FileInputStream(FILES_TEST_PATH)) {
+        try (FileInputStream input = new FileInputStream(FILES_TEST_PATH)) {
 
-            BufferedInputStream buffered = new BufferedInputStream(inputStream);
+            BufferedInputStream buffered = new BufferedInputStream(input);
 
-            DataInputStream dataInput = new DataInputStream(buffered);
+            DataInputStream data = new DataInputStream(buffered);
 
-            dataInput.close();
+            return data.readUTF();
 
-            return dataInput.readUTF();
+//            dataInput.close();
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -73,5 +73,4 @@ public class DataStreamTutor {
             e.printStackTrace();
         }
     }
-
 }
