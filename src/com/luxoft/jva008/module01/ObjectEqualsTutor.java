@@ -22,7 +22,7 @@ public class ObjectEqualsTutor {
         return employees;
     }
 
-    public Set<Employee> getEmployeesSet(ObjectMethodsTutor1.EmployeeType type) {
+    public Set<Employee> getEmployeesSet(ObjectMethodsTutor.EmployeeType type) {
         Set<Employee> employeesSet = new HashSet<Employee>();
         employeesSet.addAll(getEmployees());
         return employeesSet;
@@ -51,7 +51,7 @@ public class ObjectEqualsTutor {
     public void testEmployeesSet() {
         Set<Employee> employeesSet;
         log("***Testing HashSet: Employee");
-        employeesSet = getEmployeesSet(ObjectMethodsTutor1.EmployeeType.ByName);
+        employeesSet = getEmployeesSet(ObjectMethodsTutor.EmployeeType.ByName);
         for (Employee employee : employeesSet) {
             log(employee);
         }

@@ -2,6 +2,8 @@ package com.luxoft.jva008.module01;
 
 import org.junit.Test;
 
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Properties;
 
 import static com.luxoft.jva008.Logger.log;
@@ -9,38 +11,53 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public class PropertiesTutor {
+    private static final String FILE_PROPS = "files/props.properties";
+    private static final String SYSTEM_PROPS = "files/system.properties";
+    private final Properties properties = new Properties();
 
-	/**
-	 * Returns the value of the system property java.version
-	 */
-	public String getJavaVersion() {
-		return "";
-	}
+    /**
+     * Returns the value of the system property java.version
+     */
+    public String getJavaVersion() {
 
-	@Test
-	public void testJavaVersion() {
-		String version = getJavaVersion();
-		log(getJavaVersion());
-		assertTrue(version.startsWith("11."));
-	}
+        return getProperties(SYSTEM_PROPS).getProperty("java.runtime.version");
+    }
 
-	/**
-	 * Loads the properties file from the files / props.properties folder
-	 * And returns the downloaded properties
-	 *
-	 * @return
-	 */
-	public Properties getProperties() {
-		return new Properties();
-	}
+    @Test
+    public void testJavaVersion() {
+        String version = getJavaVersion();
+        log(getJavaVersion());
+        assertTrue(version.startsWith("11."));
+    }
 
-	@Test
-	public void testGetProperties() {
-		Properties props = getProperties();
-		log("country=" + props.getProperty("country"));
-		log("color=" + props.getProperty("color"));
-		assertEquals("Australia", props.getProperty("country"));
-		assertEquals("red", props.getProperty("color"));
-	}
+    /**
+     * Loads the properties file from the files / props.properties folder
+     * And returns the downloaded properties
+     *
+     * @return
+     */
+    public Properties getProperties() {
+        return getProperties(FILE_PROPS);
+    }
+
+    public Properties getProperties(String props) {
+
+        try (FileInputStream inputStream = new FileInputStream(props)) {
+            properties.load(inputStream);
+        } catch (IOException exception) {
+            throw new RuntimeException(exception.getMessage(), exception);
+        }
+        return properties;
+    }
+
+
+    @Test
+    public void testGetProperties() {
+        Properties props = getProperties();
+        log("country=" + props.getProperty("country"));
+        log("color=" + props.getProperty("color"));
+        assertEquals("Australia", props.getProperty("country"));
+        assertEquals("red", props.getProperty("color"));
+    }
 
 }

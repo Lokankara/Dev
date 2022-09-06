@@ -1,1 +1,5 @@
 output test
+Name: file.txt
+Path: test\..\.\file.txt
+Absolute Path: D:\work\jva008-java-tutors\test\..\.\file.txt
+Canonical Path: D:\work\jva008-java-tutors\file.txt
