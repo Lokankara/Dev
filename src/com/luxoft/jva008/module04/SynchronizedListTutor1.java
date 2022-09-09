@@ -27,6 +27,8 @@ import org.junit.Test;
  */
 
 public class SynchronizedListTutor1 {
+
+	Object monitor = new Object();
 	static boolean failed = false;
     static StringBuffer buf = new StringBuffer();
     static void log(String s) {
@@ -40,7 +42,6 @@ public class SynchronizedListTutor1 {
 	
 	static String [] animals = { "Cow", "Goose", "Cat", "Dog", "Elephant", "Rabbit", "Snake", "Chicken", "Horse", "Human" };
 	List<String> randomAnimals = Collections.synchronizedList(new ArrayList<>());
-//	Object monitor = new Object(); s
 	
 	public String getRandomAnimal() {
 		int index = (int)(Math.random() * animals.length);
@@ -58,11 +59,11 @@ public class SynchronizedListTutor1 {
 		public void run() {
 			try {
     			for (int i=0; i<20; i++) {
-//    				synchronized(monitor) {
+    				synchronized(monitor) {
 	    				randomAnimals.add(getRandomAnimal());
 	    				print(randomAnimals);
-//    				}
-//    				 print(new ArrayList<String>(randomAnimals));
+    				}
+    				 print(new ArrayList<String>(randomAnimals));
     			}
 		    } catch(Exception e) {
 		        err(e.getClass().getName());
@@ -77,7 +78,7 @@ public class SynchronizedListTutor1 {
 			 builder.append(iterator.next())
 			        .append(" ");
 		}
-//		log(builder.toString());
+		log(builder.toString());
 	}
 	
 	@Test
@@ -103,5 +104,4 @@ public class SynchronizedListTutor1 {
 	    assertFalse(failed);
 	    
 	}
-
 }

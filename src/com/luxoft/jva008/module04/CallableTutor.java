@@ -45,8 +45,8 @@ public class CallableTutor {
 
 		ArrayList<Future<String>> results = new ArrayList<>();
 
-//		ExecutorService executorService = Executors.newSingleThreadExecutor();
-		ExecutorService executorService = Executors.newFixedThreadPool(3);
+		ExecutorService executorService = Executors.newSingleThreadExecutor();
+//		ExecutorService executorService = Executors.newFixedThreadPool(3);
 //		ExecutorService executorService = Executors.newCachedThreadPool();
 
 		for (int i=0; i<10; i++) {

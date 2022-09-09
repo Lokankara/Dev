@@ -2,6 +2,7 @@ package com.luxoft.jva008.module04;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import org.junit.Test;
 import static org.junit.Assert.assertTrue;
@@ -13,7 +14,9 @@ import static org.junit.Assert.assertTrue;
 
 public class AtomicCounterTutor {
 	final int ITERATIONS = 1000000;
-	int counter=0;
+//	volatile int counter=0;
+	AtomicInteger counter = new AtomicInteger();
+
 
 	class TestThread implements Runnable {
 		String threadName;
@@ -25,8 +28,9 @@ public class AtomicCounterTutor {
 		@Override
 		public void run() {
 			for (int i=0; i<ITERATIONS; i++) {
-				counter++;
+				counter.incrementAndGet();
 			}
+
 		}
 	}
 	
@@ -49,8 +53,6 @@ public class AtomicCounterTutor {
 		}
 	    System.out.println("Counter=" + counter);
 
-        assertTrue(counter==ITERATIONS*100);
+        assertTrue(counter.get()==ITERATIONS*100);
 	}
-
-
 }
