@@ -21,7 +21,7 @@ public class ThreadTutor2 {
         public void run() {
             for (int i = 0; i < 100; i++) {
                 log(threadName + ":" + i);
-//				Thread.yield();
+				Thread.yield();
             }
         }
     }

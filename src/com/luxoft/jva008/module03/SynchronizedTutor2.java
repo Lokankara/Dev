@@ -8,7 +8,6 @@ import java.util.List;
 import org.junit.Test;
 
 public class SynchronizedTutor2 {
-
 	
 	static StringBuffer buf = new StringBuffer();
 	Integer counter = 0;

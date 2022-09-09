@@ -22,7 +22,7 @@ public class FormatDateTutor {
      */
     public String getDateByFormatter(Date date) {
 
-        String string = formatter.format(String.format("%d.%d.%d", date.getDate(), date.getMonth(), date.getYear())).toString();
+        String string = formatter.format(String.format("%td.%tm.%ty", date, date, date)).toString();
 
         log(string);
 
@@ -74,8 +74,7 @@ public class FormatDateTutor {
 
         String dateByFormatter = getDateByFormatter(date);
         log("dateByFormatter: " + dateByFormatter);
-//        assertEquals(dateByFormatter, "01.05.13");
-        //TODO Formatter deprecated
+        assertEquals(dateByFormatter, "01.05.13");
 
         String dateBySimpleDateFormat = getDateBySimpleDateFormat(date);
         log("dateBySimpleDateFormat: " + dateBySimpleDateFormat);
