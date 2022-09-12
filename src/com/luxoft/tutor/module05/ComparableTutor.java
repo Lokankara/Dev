@@ -1,60 +1,83 @@
 package com.luxoft.tutor.module05;
 
+import org.junit.Test;
+
+import java.util.*;
+import java.util.stream.Collectors;
+
 import static com.luxoft.tutor.Logger.log;
 import static org.junit.Assert.assertEquals;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Set;
-
-import org.junit.Test;
-
 /**
- *	Implement method Set<Animal> getAnimalsOrderedByNameSet()
- * 	and method Set<Animal> getAnimalsOrderedByNameSetDesc()
+ * Implement method Set<Animal> getAnimalsOrderedByNameSet()
+ * and method Set<Animal> getAnimalsOrderedByNameSetDesc()
  */
 
 public class ComparableTutor {
-	String [] animals =
-        {"Cow", "Goose", "Cat", "Dog", "Elephant", "Rabbit", "Snake", "Chicken", "Horse", "Human"};
+    String[] animals =
+            {"Cow", "Goose", "Cat", "Dog", "Elephant", "Rabbit", "Snake", "Chicken", "Horse", "Human"};
 
-    class Animal{
+    static class Animal implements Comparable<Animal> {
         String name;
+
         public Animal(String name) {
             this.name = name;
         }
+
         @Override
         public String toString() {
             return name;
         }
+
+        @Override
+        public int compareTo(Animal animal) {
+            return name.compareTo(animal.name);
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) return true;
+            if (!(o instanceof Animal)) return false;
+            Animal animal = (Animal) o;
+            return Objects.equals(name, animal.name);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(name);
+        }
     }
 
     /**
-	 * Method should return a Set of Animal instances, alphabetically sorted
-	 * Use TreeSet for that and implement Comparable interface in Animal class.
+     * Method should return a Set of Animal instances, alphabetically sorted
+     * Use TreeSet for that and implement Comparable interface in Animal class.
      */
     public Set<Animal> getAnimalsOrderedByNameSet() {
-        return null;
+        return Arrays.stream(animals)
+                .map(Animal::new)
+                .collect(Collectors.toCollection(TreeSet::new));
     }
 
     /**
-	 * Method should return a Set of Animal instances,
-	 * ordered by the name in reverse order.
-	 * Use TreeSet for that and pass a Comparator implementation as a parameter.
-     *
+     * Method should return a Set of Animal instances,
+     * ordered by the name in reverse order.
+     * Use TreeSet for that and pass a Comparator implementation as a parameter.
      */
     public Set<Animal> getAnimalsOrderedByNameSetDesc() {
-        return null;
+        return Arrays.stream(animals)
+                .map(Animal::new)
+                .collect(Collectors.toCollection(TreeSet::new))
+                .descendingSet();
     }
 
     public String joinByCycle(Collection<?> c) {
         if (c == null) {
-        	return "";
+            return "";
         }
         StringBuilder builder = new StringBuilder();
-        for (Object s: c) {
+        for (Object s : c) {
             builder.append(s);
-            if (builder.length()>0) builder.append(", ");
+            if (builder.length() > 0) builder.append(", ");
         }
         return builder.toString();
     }

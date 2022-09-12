@@ -27,6 +27,14 @@ public class ReadWriteLockTutor {
         buf.append(s + "\n");
     }
 
+    public Lock writeLock() {
+        return null;
+    }
+
+    public Lock readLock() {
+        return null;
+    }
+
     class WritingThread implements Runnable {
         String threadName;
         Lock lock;

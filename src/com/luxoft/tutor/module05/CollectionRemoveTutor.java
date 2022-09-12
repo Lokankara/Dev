@@ -12,44 +12,45 @@ import java.util.List;
 import org.junit.Test;
 
 /**
- * 1) Remove all entrances of word "Cow" and print the result 
+ * 1) Remove all entrances of word "Cow" and print the result
  * 2) Remove all entrances having 3 letters and print the result
- * 3) Implement method removeIf which will take interface ShouldRemove as a parameter: 
- * <T> List<T> removeIf(List<T> list, ShouldRemove<T> shouldRemove) 
+ * 3) Implement method removeIf which will take interface ShouldRemove as a parameter:
+ * <T> List<T> removeIf(List<T> list, ShouldRemove<T> shouldRemove)
  * This method have to iterate over the list and
  * remove those elements for which ShouldRemove.check() returns true
  */
 
 interface ShouldRemove<T> {
-	boolean check(T elem);
+    boolean check(T elem);
 }
 
 public class CollectionRemoveTutor {
-	String[] animals = { "Cow", "Goose", "Cat", "Dog", "Elephant", "Rabbit", "Snake", "Chicken", "Horse", "Human" };
+    String[] animals = {"Cow", "Goose", "Cat", "Dog", "Elephant", "Rabbit", "Snake", "Chicken", "Horse", "Human"};
 
     public String joinByCycle(Collection<?> c) {
         StringBuilder builder = new StringBuilder();
-        for (Object item: c) {
+        for (Object item : c) {
             builder.append(item);
-            if (builder.length() > 0) { 
-            	builder.append(", ");
+            if (builder.length() > 0) {
+                builder.append(", ");
             }
         }
         return builder.toString();
     }
 
     public List<String> getAnimals() {
-        return new ArrayList<String>(Arrays.asList(animals));
+        return new ArrayList<>(Arrays.asList(animals));
     }
 
-	// Remove all entrances of word "Cow"
+    // Remove all entrances of word "Cow"
     public void unCow(List<String> list) {
-
+        while(list.remove("Cow"));
     }
+
 
     // Remove all entrances having 3 letters
     public void un3Letterization(List<String> list) {
-
+        list.removeIf(animal -> animal.length() < 4);
     }
 
 
@@ -68,7 +69,7 @@ public class CollectionRemoveTutor {
 
     @Test
     public void unCow_emptyList_doNothing() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         unCow(list);
 
@@ -77,7 +78,7 @@ public class CollectionRemoveTutor {
 
     @Test
     public void unCow_1CowList_removeCowFromList() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         list.add("Cow");
 
@@ -88,7 +89,7 @@ public class CollectionRemoveTutor {
 
     @Test
     public void unCow_2CowAndAnyStringList_removeKorovaFromList() {
-        List<String> list = new ArrayList<String>();
+        List<String> list = new ArrayList<>();
 
         list.add("Cow");
         list.add("anystring");

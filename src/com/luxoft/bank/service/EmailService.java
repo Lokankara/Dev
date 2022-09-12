@@ -12,7 +12,7 @@ public class EmailService implements Runnable, Serializable {
     private final Queue<Email> emailQueue = new Queue<>();
     private final transient Thread thread;
     private int emailCounter = 0;
-    private boolean close;
+    private volatile boolean close;
 
     public EmailService() {
         this.thread = new Thread(this);
@@ -26,6 +26,7 @@ public class EmailService implements Runnable, Serializable {
             if (close) {
                 return;
             }
+
             Email email = emailQueue.get();
 
             if ((email != null)) {
@@ -48,12 +49,14 @@ public class EmailService implements Runnable, Serializable {
     }
 
     public void sendNotificationEmail(Email email) throws BankException {
-        if (!close) {
-            emailQueue.add(email);
-            synchronized (emailQueue) {
-                emailQueue.notifyAll();
-            }
-        } else
+
+        if (close) {
             throw new BankException("Email not sent");
+        }
+
+        emailQueue.add(email);
+        synchronized (emailQueue) {
+            emailQueue.notifyAll();
+        }
     }
 }
