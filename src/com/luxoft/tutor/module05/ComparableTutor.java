@@ -75,17 +75,20 @@ public class ComparableTutor {
             return "";
         }
         StringBuilder builder = new StringBuilder();
-        for (Object s : c) {
-            builder.append(s);
-            if (builder.length() > 0) builder.append(", ");
-        }
+        c.forEach(s -> build(builder, s));
         return builder.toString();
+    }
+
+    private static void build(StringBuilder builder, Object s) {
+        builder.append(s);
+        if (builder.length() > 0) {
+            builder.append(", ");
+        }
     }
 
     @Test
     public void testCollections() {
         log("getAnimalsList: " + joinByCycle(Arrays.asList(animals)));
-
         log("getAnimalsOrderedByNameSet: " + joinByCycle(getAnimalsOrderedByNameSet()));
         log("getAnimalsOrderedByNameSetDesc: " + joinByCycle(getAnimalsOrderedByNameSetDesc()));
     }

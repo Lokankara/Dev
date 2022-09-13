@@ -13,21 +13,21 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 public class TestEmail {
-    private static final int NO_EMAILS = 20;
+    private static final int EMAILS = 20;
     private Client client;
     private Client to;
 
     @Before
     public void setup() {
-        client = new Client("Andrew", Gender.MALE);
-        to = new Client("Brian", Gender.MALE);
+        client = new Client("Andrew", Gender.MALE, "Kiev");
+        to = new Client("Brian", Gender.MALE, "Lvov");
     }
 
     @Test
-    public void testSendMail() throws InterruptedException {
+    public void testSend() throws InterruptedException {
 
         EmailService emailService = new EmailService();
-        for (int i = 0; i < NO_EMAILS; i++) {
+        for (int i = 0; i < EMAILS; i++) {
             try {
                 emailService.sendNotificationEmail(
                         new Email(client, List.of(to), "Email Service")
@@ -37,8 +37,7 @@ public class TestEmail {
             }
             Thread.sleep(100);
         }
-
-        assertEquals(NO_EMAILS, emailService.getEmailCounter());
+        assertEquals(EMAILS, emailService.getEmailCounter());
 
     }
 }

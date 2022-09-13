@@ -83,5 +83,4 @@ public class LinkedOrArrayListTutor {
 		}
 		nextTimeLog("linkedList contains");
 	}
-
 }

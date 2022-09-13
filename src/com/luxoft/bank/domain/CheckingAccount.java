@@ -1,8 +1,10 @@
 package com.luxoft.bank.domain;
 
+import com.luxoft.bank.annotations.ActiveRecordEntity;
 import com.luxoft.bank.exceptions.NotEnoughFundsException;
 import com.luxoft.bank.exceptions.OverdraftLimitExceededException;
 
+@ActiveRecordEntity(tableName = "CHECKING_ACCOUNT", columnKeyName = "id")
 public class CheckingAccount extends AbstractAccount {
 	
 	private double overdraft;
@@ -34,5 +36,15 @@ public class CheckingAccount extends AbstractAccount {
 
 	public int decimalValue() {
 		return 0;
+	}
+
+	@Override
+	public void getById(int id) {
+
+	}
+
+	@Override
+	public void getAll() {
+
 	}
 }

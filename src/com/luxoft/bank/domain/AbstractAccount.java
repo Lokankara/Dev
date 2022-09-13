@@ -1,8 +1,11 @@
 package com.luxoft.bank.domain;
 
+import com.luxoft.bank.annotations.ActiveRecord;
 import com.luxoft.bank.exceptions.NotEnoughFundsException;
 
-public abstract class AbstractAccount implements Account {
+import java.util.Objects;
+
+public abstract class AbstractAccount extends ActiveRecord implements Account  {
 	private final int id;
 	protected double balance;
 
@@ -40,5 +43,18 @@ public abstract class AbstractAccount implements Account {
 	@Override
 	public double getBalance() {
 		return balance;
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof AbstractAccount)) return false;
+		AbstractAccount that = (AbstractAccount) o;
+		return id == that.id && Double.compare(that.balance, balance) == 0;
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id, balance);
 	}
 }

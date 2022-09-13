@@ -47,7 +47,7 @@ public class Test3 {
     @Test(expected = ClientExistsException.class)
     public void testClientExists() throws ClientExistsException {
         Bank bank = new Bank();
-        Client client1 = new Client("Smith John", Gender.MALE);
+        Client client1 = new Client("Smith John", Gender.MALE,"Che");
 
         List<Account> accounts = new ArrayList<>();
         accounts.add(new SavingAccount(1, 1000.0));

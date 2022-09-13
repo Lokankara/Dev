@@ -5,14 +5,22 @@ import java.util.Collections;
 import java.util.List;
 
 public class Client {
-
     private final String name;
     private final Gender gender;
     private List<Account> accounts = new ArrayList<Account>();
+    private final String city;
+
+    public Client(String name, Gender gender, String city) {
+        this.name = name;
+        this.gender = gender;
+        this.city = city;
+    }
 
     public Client(String name, Gender gender) {
         this.name = name;
         this.gender = gender;
+        this.accounts = new ArrayList<>();
+        this.city = "";
     }
 
     public void addAccount(final Account account) {
@@ -25,6 +33,10 @@ public class Client {
 
     public Gender getGender() {
         return gender;
+    }
+
+    public String getCity() {
+        return city;
     }
 
     public List<Account> getAccounts() {

@@ -23,24 +23,37 @@ public class EmailService implements Runnable, Serializable {
     public void run() {
 
         while (true) {
-            if (close) {
+            if (!close) {
+                Email email = emailQueue.get();
+
+                increase(email);
+
+                synchronized (emailQueue) {
+                    try {
+                        emailQueue.wait();
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            } else {
                 return;
             }
+        }
+    }
 
-            Email email = emailQueue.get();
+    public void close() {
+        close = true;
+        try {
+            thread.join();
+        } catch (InterruptedException e) {
+            throw new RuntimeException();
+        }
+    }
 
-            if ((email != null)) {
-                emailCounter++;
-                log(email + " has been sent");
-            }
-
-            try {
-                synchronized (emailQueue) {
-                    emailQueue.wait();
-                }
-            } catch (InterruptedException e) {
-                throw new IllegalArgumentException();
-            }
+    private void increase(Email email) {
+        if ((email != null)) {
+            emailCounter++;
+            log(String.format("%s has been sent", email));
         }
     }
 
@@ -49,14 +62,13 @@ public class EmailService implements Runnable, Serializable {
     }
 
     public void sendNotificationEmail(Email email) throws BankException {
-
-        if (close) {
+        if (!close) {
+            emailQueue.add(email);
+            synchronized (emailQueue) {
+                emailQueue.notifyAll();
+            }
+        } else {
             throw new BankException("Email not sent");
-        }
-
-        emailQueue.add(email);
-        synchronized (emailQueue) {
-            emailQueue.notifyAll();
         }
     }
 }

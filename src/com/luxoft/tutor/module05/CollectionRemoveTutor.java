@@ -20,9 +20,6 @@ import org.junit.Test;
  * remove those elements for which ShouldRemove.check() returns true
  */
 
-interface ShouldRemove<T> {
-    boolean check(T elem);
-}
 
 public class CollectionRemoveTutor {
     String[] animals = {"Cow", "Goose", "Cat", "Dog", "Elephant", "Rabbit", "Snake", "Chicken", "Horse", "Human"};

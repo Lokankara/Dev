@@ -1,11 +1,8 @@
 package com.luxoft.tutor.module05;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
-import java.util.SortedMap;
-import java.util.TreeMap;
+import java.util.*;
 
+import com.luxoft.tutor.Logger;
 import org.junit.Test;
 
 import static com.luxoft.tutor.Logger.log;
@@ -14,51 +11,66 @@ import static org.junit.Assert.assertTrue;
 
 /**
  * 1) Implement methods fillAnimalsLengthMap() and printMap().
- * 		Look at the result of the program execution.
+ * Look at the result of the program execution.
  * 2) Implement methods fillLengthAnimalsMap() and printMapOfSets()
- * 		Look at the result of the program execution.
+ * Look at the result of the program execution.
  */
 
 public class MapTutor {
-	Map<String, Integer> animalsLengthMap = new HashMap<String, Integer>();
+    Map<String, Integer> animalsLengthMap = new HashMap<String, Integer>();
     Map<Integer, Set<String>> lengthAnimalsMap = new HashMap<Integer, Set<String>>();
 
-    String [] animals =
-        {"Cow", "Goose", "Cat", "Dog", "Elephant", "Rabbit", "Snake", "Chicken", "Horse", "Human"};
+    String[] animals =
+            {"Cow", "Goose", "Cat", "Dog", "Elephant", "Rabbit", "Snake", "Chicken", "Horse", "Human"};
 
     /**
-	 * should fill the table animalsLengthMap with values
-	 * animal => animal.length()
-	 * for example
-	 * "Cow" => 3
-	 * "Snake" => 5
+     * should fill the table animalsLengthMap with values
+     * animal => animal.length()
+     * for example
+     * "Cow" => 3
+     * "Snake" => 5
      */
     public void fillAnimalsLengthMap() {
+
+        Arrays.stream(animals)
+                .forEach(animal ->
+                        animalsLengthMap.put(animal, animal.length()));
     }
 
     /**
-	 * Prints the table animalsLengthMap,
-	 * by printing the key and value
+     * Prints the table animalsLengthMap,
+     * by printing the key and value
      */
-    public void printMap(Map<?,?> map) {
+    public void printMap(Map<?, ?> map) {
+        map.keySet().stream()
+                .map(key -> String.format("%s:%s", key, map.get(key)))
+                .forEach(Logger::log);
     }
 
     /**
-	 * Fills table lengthAnimalsMap by values 
-	 * animal name length => list of the animals of such a length
-	 * for example:
-	 * 3 => Cow, Dog, Cat
-	 * 5 => Goose, Snake, Horse, Human
-	 * 6 => Rabbit
+     * Fills table lengthAnimalsMap by values
+     * animal name length => list of the animals of such a length
+     * for example:
+     * 3 => Cow, Dog, Cat
+     * 5 => Goose, Snake, Horse, Human
+     * 6 => Rabbit
      */
     public void fillLengthAnimalsMap() {
+        Arrays.stream(animals).forEach(this::push);
+    }
+
+    private void push(String animal) {
+        Set<String> set = lengthAnimalsMap.computeIfAbsent(animal.length(), k -> new HashSet<>());
+        set.add(animal);
+        animalsLengthMap.put(animal, animal.length());
     }
 
     /**
-	 * prints the contents of lengthAnimalsMap,
-	 * by printing the key and list of values
+     * prints the contents of lengthAnimalsMap,
+     * by printing the key and list of values
      */
-    public void printMapOfSets(Map<Integer,Set<String>> map) {
+    public void printMapOfSets(Map<Integer, Set<String>> map) {
+        printMap(map);
     }
 
     @Test
@@ -68,20 +80,20 @@ public class MapTutor {
         printMap(animalsLengthMap);
 
         log("== printMap treemap animalsLengthMap");
-        SortedMap<String, Integer> sortedMap = new TreeMap<String,Integer>(animalsLengthMap);
+        SortedMap<String, Integer> sortedMap = new TreeMap<String, Integer>(animalsLengthMap);
         printMap(sortedMap);
 
         log("== print lengthAnimalsMap");
         fillLengthAnimalsMap();
         printMapOfSets(lengthAnimalsMap);
 
-        SortedMap<Integer,Set<String>> sortedMap2 = new TreeMap<Integer,Set<String>>(lengthAnimalsMap);
+        SortedMap<Integer, Set<String>> sortedMap2 = new TreeMap<Integer, Set<String>>(lengthAnimalsMap);
 
         log("== sortedMap headSet where key<6");
         printMapOfSets(sortedMap2.headMap(6));
 
         log("== sortedMap subMap 5..7");
-        printMapOfSets(sortedMap2.subMap(5,7));
+        printMapOfSets(sortedMap2.subMap(5, 7));
     }
 
     @Test

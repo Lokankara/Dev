@@ -1,58 +1,87 @@
 package com.luxoft.tutor.module06;
 
-import static com.luxoft.tutor.Logger.log;
-import java.lang.reflect.Constructor;
+import com.luxoft.tutor.Logger;
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.util.Arrays;
+
+import static com.luxoft.tutor.Logger.log;
+
 public class ReflectionTutor {
-	final static String introspectClass = "com.luxoft.jva008.module05.ExampleClass";
+    static final String introspectClass = "com.luxoft.tutor.module06.ExampleClass";
 
-	@Test
-	public void testReflection() {
-		try {
-			// TODO: load ExampleClass at runtime by name
-			
-			// TODO: show all constructors (use method showConstructors())
+    @Test
+    public void testReflection() {
+        String[] array = {"printIt", "printItString", "printItInt", "setCounter", "printCounter"};
 
-			// TODO: list all methods, return types and arguments 
-			
-			// TODO: list all fields and types of the class
+        try {
+            Method print;
 
-			// TODO: call the printIt() method
-			
-			// TODO: call the printItString() method, pass a String param
+            Class<?> clazz = Class.forName(introspectClass);
 
-			// TODO: call the printItInt() method, pass a int param
+            Object instance = clazz.getDeclaredConstructor().newInstance();
 
-			// TODO: call the setCounter() method, pass a int param
+            Method[] methods = clazz.getMethods();
 
-			// TODO: call the printCounter() method
-			
-		} catch (Exception ex) {
-			ex.printStackTrace();
-		}
-	}
-	
-	public void showConstructors(Class<String> clazz) {
-		for (Constructor<?> constr: clazz.getConstructors()) {
-			StringBuilder sb = new StringBuilder();
-			for (Class<?> param: constr.getParameterTypes()) {
-				if (sb.length() > 0) { 
-					sb.append(", ");
-				}
-				sb.append(param.getSimpleName());
-			}
-			sb.insert(0, "constructor: " + constr.getName() + "(");
-			sb.append(")");
-			log(sb.toString());
-		}
-		log("SuperClass: " + clazz.getSuperclass().getSimpleName());
-	}
-	
-	@Test
-	public void testShowConstructors() {
-		showConstructors(java.lang.String.class);
-	}
+            Field[] fields = clazz.getDeclaredFields();
+
+            Arrays.stream(fields).map(Field::getName).forEach(Logger::log);
+
+            Arrays.stream(methods)
+                    .filter(method -> method.getDeclaringClass() == clazz)
+                    .map(method -> method.getName() + ": " + method.toGenericString())
+                    .forEach(Logger::log);
+
+            print = clazz.getDeclaredMethod(array[0]);
+            print.invoke(instance, (Object[]) null);
+
+            print = clazz.getDeclaredMethod(array[1], String.class);
+            print.invoke(instance, "");
+
+            print = clazz.getDeclaredMethod(array[2], Integer.TYPE);
+            print.invoke(instance, 2);
+
+            print = clazz.getDeclaredMethod(array[3], Integer.TYPE);
+            print.invoke(instance, 3);
+
+            print = clazz.getDeclaredMethod(array[4]);
+            print.invoke(instance, (Object[]) null);
+
+            // TODO: show all constructors (use method showConstructors())
+
+            // TODO: list all methods, return types and arguments
+
+            // TODO: list all fields and types of the class
+
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    public void showConstructors(Class<String> clazz) {
+        for (Constructor<?> constr : clazz.getConstructors()) {
+            StringBuilder sb = new StringBuilder();
+            for (Class<?> param : constr.getParameterTypes()) {
+                if (sb.length() > 0) {
+                    sb.append(", ");
+                }
+                sb.append(param.getSimpleName());
+            }
+            sb.insert(0, "constructor: " + constr.getName() + "(");
+            sb.append(")");
+            log(sb.toString());
+        }
+        log("SuperClass: " + clazz.getSuperclass().getSimpleName());
+    }
+
+    @Test
+    public void testShowConstructors() {
+        showConstructors(java.lang.String.class);
+    }
 
 }
 
