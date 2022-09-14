@@ -17,6 +17,7 @@ public class ChainConsumers {
         Consumer<String> c1 = System.out::println;
         
         strings.forEach(c1.andThen(result::add));
+
         System.out.println("size of result = " + result.size());
         
         strings.forEach(e->{System.out.println(e+", ");});
