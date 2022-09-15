@@ -2,6 +2,8 @@ package com.luxoft.tutor.module09;
 
 import org.junit.Test;
 
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
 import static org.junit.Assert.assertEquals;
@@ -29,16 +31,15 @@ public class IntStreamTutor {
 	 */
 	@Test
 	public void testIntStream() {
-		
-		int max = 0;
+
+		int max = intStream().max().orElse(0);
 		log(max);
 		assertEquals(max, 4);
 		
-		int avg = 0;
+		int avg = (int) intStream().average().orElse(0);
 		log(avg);
-		assertEquals(avg, 3);		
-		
-		String distinct = "";
+		assertEquals(avg, 3);
+		String distinct = intStream().distinct().mapToObj(i -> String.valueOf(i)).collect(Collectors.joining(","));
 		log(distinct);
 		assertEquals(distinct, "2,3,4");		
 		

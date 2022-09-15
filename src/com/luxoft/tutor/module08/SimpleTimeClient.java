@@ -1,4 +1,6 @@
-package com.luxoft.tutor.module08.defaultmethods;
+package com.luxoft.tutor.module08;
+
+import com.luxoft.tutor.module08.defaultInterfaces.TimeClient;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

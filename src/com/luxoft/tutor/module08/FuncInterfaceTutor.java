@@ -75,7 +75,6 @@ public class FuncInterfaceTutor {
 
         return info;
     }
-
     public static void main(String[] args) {
         Func f = () -> {
             System.out.println("Hi");

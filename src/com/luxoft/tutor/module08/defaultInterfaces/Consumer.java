@@ -1,4 +1,4 @@
-package com.luxoft.tutor.module08;
+package com.luxoft.tutor.module08.defaultInterfaces;
 
 @FunctionalInterface
 public interface Consumer<T> {

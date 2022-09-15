@@ -1,4 +1,7 @@
-package com.luxoft.tutor.module08.defaultmethods;
+package com.luxoft.tutor.module08;
+
+import com.luxoft.tutor.module08.defaultInterfaces.Bar;
+import com.luxoft.tutor.module08.defaultInterfaces.Foo;
 
 public class FooBar implements Foo, Bar {
 	

@@ -1,4 +1,4 @@
-package com.luxoft.tutor.module08.defaultmethods;
+package com.luxoft.tutor.module08.defaultInterfaces;
 
 public interface Foo {
 	

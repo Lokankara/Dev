@@ -1,5 +1,7 @@
 package com.luxoft.tutor.module09;
 
+import com.luxoft.tutor.Logger;
+
 import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
@@ -9,21 +11,33 @@ import java.util.stream.IntStream;
 public class RandomTutor {
 
 	public static void main(String[] args) {
-		Random rnd = new Random();
+		Random random = new Random();
 		
-		List<Integer> intList = rnd.ints().limit(10)
-				.boxed().collect(Collectors.toList());
+		List<Integer> intList = random
+				.ints()
+				.limit(10)
+				.boxed()
+				.collect(Collectors.toList());
 		
-		int[] ints = rnd.ints().limit(10).toArray();
+		int[] ints = random
+				.ints()
+				.limit(10)
+				.toArray();
 		
 		IntStream intStream = Arrays.stream(ints);
-		String joined = intStream.boxed().map((i)->i.toString())
-			.collect(Collectors.joining(","));
-		System.out.println(joined);
+
+		String joined = intStream
+				.boxed()
+				.map(Object::toString)
+				.collect(Collectors.joining(","));
+
 		intStream = Arrays.stream(ints);
-		System.out.println(intStream.average().getAsDouble());
-		
-		System.out.println(intList.stream()
+
+		Logger.log(joined);
+
+		Logger.log(intStream.average().getAsDouble());
+
+		Logger.log(intList.stream()
 				.mapToInt(Integer::intValue)
 				.sum());
 	}
