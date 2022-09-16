@@ -1,8 +1,8 @@
 package com.luxoft.tutor.module08;
 
 import com.luxoft.tutor.Logger;
-import com.luxoft.tutor.module08.defaultInterfaces.*;
 import com.luxoft.tutor.module08.defaultInterfaces.Comparator;
+import com.luxoft.tutor.module08.defaultInterfaces.*;
 import org.junit.Before;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -11,10 +11,10 @@ import java.io.File;
 import java.lang.Runnable;
 import java.util.*;
 import java.util.function.Supplier;
-import java.util.stream.Stream;
 
 import static com.luxoft.tutor.module08.LambdaTest.transferElements;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 class FuncInterfaceTutorTest {
     private static int max = 5;
@@ -36,6 +36,7 @@ class FuncInterfaceTutorTest {
         Person june = new Person(cal.getTime());
 
         rosterAsArray = new Person[]{june, may, january};
+
         roster = List.of(rosterAsArray);
     }
 
@@ -89,19 +90,19 @@ class FuncInterfaceTutorTest {
 
 
     @Test
-    @DisplayName("how to get persons high ranked and starts with A")
-    public void shouldGetPersonsHighRankedAndStartsWithJ() {
-        Predicate<Person> isHighRanked = person -> person.getAge() >= 18;
+    @DisplayName("how to get persons high age and starts with A")
+    public void shouldGetPersonsHighAgeAndStartsWithA() {
+        Predicate<Person> isAdult = person -> person.getAge() >= 18;
         Predicate<Person> startsWith = person -> person.getName().startsWith("A");
-//        assertEquals(2, roster.stream().filter(isHighRanked).filter(startsWith).count());
+        assertEquals(2, roster.stream().filter((java.util.function.Predicate<? super Person>) isAdult).filter((java.util.function.Predicate<? super Person>) startsWith).count());
     }
 
 
     @Test
     @DisplayName("how to get persons with four in ranking or more")
     public void shouldGetPersonsWithFourInRankingOrMore() {
-        Predicate<Person> isHighRanked = person -> person.getAge() >= 18;
-//        assertEquals(4, roster.stream().filter(isHighRanked).count());
+        Predicate<Person> isAdult = person -> person.getAge() >= 18;
+        assertEquals(4, roster.stream().filter((java.util.function.Predicate<? super Person>) isAdult).count());
     }
 
     @Test

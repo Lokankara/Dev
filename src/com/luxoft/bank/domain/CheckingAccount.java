@@ -34,9 +34,6 @@ public class CheckingAccount extends AbstractAccount {
         return getBalance() + overdraft;
     }
 
-	public int decimalValue() {
-		return 0;
-	}
 
 	@Override
 	public void getById(int id) {
@@ -46,5 +43,10 @@ public class CheckingAccount extends AbstractAccount {
 	@Override
 	public void getAll() {
 
+	}
+
+	@Override
+	public String toString() {
+		return String.format("Checking account %d, balance: %.2f, overdraft: %.2f", getId(), balance, overdraft);
 	}
 }

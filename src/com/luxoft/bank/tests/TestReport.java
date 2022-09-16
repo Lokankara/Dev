@@ -52,7 +52,9 @@ public class TestReport {
         accountsSortedBySum.add(account1);
         assertEquals(accountsSortedBySum, bankReport.getAccountsSortedBySum(bank));
 
-        assertEquals(20.0, bankReport.getBankCreditSum(bank), 0.0001);
+        double bankCreditSum = bankReport.getBankCreditSum(bank);
+
+        assertEquals(20.0, bankCreditSum, 0.0001);
 
         Map<Client, Collection<Account>> map = new HashMap<>();
         map.put(client1, client1.getAccounts());
@@ -74,4 +76,5 @@ public class TestReport {
 
         assertEquals(mapClientByCity, bankReport.getClientsByCity(bank));
     }
+    //TODO Credit test
 }

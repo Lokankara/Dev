@@ -47,6 +47,7 @@ public class LocalDateDemo {
 		ZonedDateTime zonedDatetimeFromZone2 = ZonedDateTime.now(ZoneId.of("America/New_York"));
 		ZonedDateTime zonedDatetimeFromZone3 = ZonedDateTime.now(ZoneId.of("Europe/Bucharest"));
 		ZonedDateTime zonedDatetimeFromZone4 = ZonedDateTime.now();
+
 		System.out.println(zonedDatetimeFromZone1.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
 		System.out.println(zonedDatetimeFromZone2.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));
 		System.out.println(zonedDatetimeFromZone3.format(DateTimeFormatter.ofPattern("dd.MM.yyyy HH:mm")));

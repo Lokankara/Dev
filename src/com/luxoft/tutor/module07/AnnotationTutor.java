@@ -1,5 +1,6 @@
 package com.luxoft.tutor.module07;
 
+import com.luxoft.tutor.Logger;
 import org.junit.Test;
 
 import java.lang.annotation.Annotation;
@@ -20,16 +21,13 @@ public class AnnotationTutor {
 
         Method method = cls.getDeclaredMethod("printIt", new Class[0]);
 
-        // show information about method annotated with MyAnnotation
-        // print name value of the annotation
         MyAnnotation annotation = method.getAnnotation(MyAnnotation.class);
-        boolean myAnnotation = method.isAnnotationPresent(MyAnnotation.class);
-        if (myAnnotation) {
-            log("my annotation name = " + annotation.name());
-        }
 
-        // TODO: show information about all annotated fields
-        // print name and properties of the annotations
+        boolean myAnnotation = method.isAnnotationPresent(MyAnnotation.class);
+
+        if (myAnnotation) {
+            log(String.format("my annotation name = %s", annotation));
+        }
 
         Field[] fields = cls.getDeclaredFields();
 
@@ -38,7 +36,10 @@ public class AnnotationTutor {
             if (annotations.length > 0) {
                 for (Annotation annotation1 : annotations) {
                     if (annotation1 instanceof Default) {
-                        System.out.println("Field: " + field.getName() + ", annotation name = " + ((Default) annotation1).name() + ", annotation value = " + ((Default) annotation1).value());
+                        log(String.format("Field: %s, annotation name = %s, annotation value = %s%n",
+                                field.getName(),
+                                ((Default) annotation1).name(),
+                                ((Default) annotation1).value()));
                     }
                 }
 
@@ -56,26 +57,26 @@ public class AnnotationTutor {
         assertEquals(name2, "my name");
     }
 
-//	public String getFieldValue(Object obj, String fieldName) throws ClassNotFoundException {
-    // TODO: should return the value of field
-    // or defValue, if field was annotated by @Default and field is not set
-//	    return null;
-//	}
+    public String getFieldValue(Object obj, String fieldName) throws ClassNotFoundException, IllegalAccessException {
 
-    public String getFieldValue(Object obj, String fieldName) throws IllegalArgumentException, IllegalAccessException {
-        Class<? extends Object> cls = obj.getClass();
-        for (Field field : cls.getDeclaredFields()) {
+        Class<? extends Object> clazz = obj.getClass();
+
+        for (Field field : clazz.getDeclaredFields()) {
+
             String name = field.getName();
+
             field.setAccessible(true);
-            Object value = field.get(obj);
-            if (value != null) {
-                return value.toString();
+
+            if (field.get(obj) != null) {
+                return field.get(obj).toString();
             }
+
             if (name.equals(fieldName)) {
+
                 Annotation[] annotations = field.getDeclaredAnnotations();
                 if (annotations.length > 0) {
-                    for (int i = 0; i < annotations.length; i++) {
-                        if (annotations[i] instanceof Default) {
+                    for (Annotation annotation : annotations) {
+                        if (annotation instanceof Default) {
                             Default myAnnotation = (Default) annotations[0];
                             return myAnnotation.value();
                         }
@@ -83,7 +84,6 @@ public class AnnotationTutor {
                 }
             }
         }
-
         return null;
     }
 

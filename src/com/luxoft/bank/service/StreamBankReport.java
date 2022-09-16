@@ -1,13 +1,18 @@
 package com.luxoft.bank.service;
 
-import com.luxoft.bank.domain.Account;
-import com.luxoft.bank.domain.Bank;
-import com.luxoft.bank.domain.Client;
+import com.luxoft.bank.domain.*;
 
 import java.util.*;
+import java.util.function.Function;
+import java.util.function.Predicate;
+import java.util.function.ToDoubleFunction;
 import java.util.stream.Collectors;
 
 public class StreamBankReport implements BankReportStreams {
+    private final ToDoubleFunction<? super Account> balance = Account::getBalance;
+    private final Predicate<? super Account> allow = account -> account.getBalance() < 0;
+    private final ToDoubleFunction<? super Account> decrease = account -> -account.getBalance();
+    private final Function<? super Client, ? extends Collection<Account>> accounts = Client::getAccounts;
 
     @Override
     public int getNumberOfClients(Bank bank) {
@@ -33,33 +38,33 @@ public class StreamBankReport implements BankReportStreams {
 
     @Override
     public double getTotalSumInAccounts(Bank bank) {
+
         return bank.getClients()
                 .stream()
-                .map(Client::getAccounts)
+                .map(accounts)
                 .flatMap(Collection::stream)
-                .mapToDouble(Account::getBalance)
+                .mapToDouble(balance)
                 .sum();
     }
 
     @Override
     public SortedSet<Account> getAccountsSortedBySum(Bank bank) {
 
-        TreeSet<Account> accountTreeSet = new TreeSet<>(Comparator.comparingDouble(Account::getBalance));
+        TreeSet<Account> accountTreeSet = new TreeSet<>(Comparator.comparingDouble(balance));
 
-        bank.getClients().stream().map(Client::getAccounts).forEach(accountTreeSet::addAll);
+        bank.getClients().stream().map(accounts).forEach(accountTreeSet::addAll);
 
         return accountTreeSet;
     }
 
     @Override
     public double getBankCreditSum(Bank bank) {
-
         return bank.getClients()
                 .stream()
                 .mapToDouble(client -> client.getAccounts()
                         .stream()
-                        .filter(account -> account.getBalance() < 0)
-                        .mapToDouble(account -> -account.getBalance())
+                        .filter(allow)
+                        .mapToDouble(decrease)
                         .sum())
                 .sum();
     }
@@ -69,13 +74,18 @@ public class StreamBankReport implements BankReportStreams {
 
         return bank.getClients()
                 .stream()
-                .collect(Collectors.toMap(client -> client,
-                        Client::getAccounts, (a, b) -> b));
+                .collect(Collectors.toMap(
+                        client -> client,
+                        accounts,
+                        (a, b) -> b));
     }
 
     @Override
     public Map<String, List<Client>> getClientsByCity(Bank bank) {
-        return bank.getClients().stream().collect(Collectors.groupingBy(Client::getCity));
+
+        return bank.getClients()
+                .stream()
+                .collect(Collectors.groupingBy(
+                        Client::getCity));
     }
 }
-//TODO Credit test

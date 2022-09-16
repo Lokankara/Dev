@@ -13,17 +13,20 @@ import static com.luxoft.tutor.Logger.log;
 public class Bank implements Serializable {
     private final List<Client> clients = new ArrayList<Client>();
     private final List<ClientRegistrationListener> listeners = new ArrayList<>();
-    private final EmailService emailService;
+    private final EmailService emailService = new EmailService();
 
     private int printedClients = 0;
     private int emailedClients = 0;
     private int debuggedClients = 0;
 
     public Bank() {
-        emailService = new EmailService();
         listeners.add(new PrintClientListener());
         listeners.add(new EmailNotificationListener());
         listeners.add(new DebugListener());
+    }
+
+    public Bank(String bank) {
+
     }
 
     public int getPrintedClients() {

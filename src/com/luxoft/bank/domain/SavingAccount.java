@@ -12,13 +12,14 @@ public class SavingAccount extends AbstractAccount {
         return getBalance();
     }
 
-    public int decimalValue() {
-        return 0;
+    @Override
+    public String toString() {
+        return String.format("Saving account %d, balance: %.2f", getId(), balance);
     }
 
     @Override
     public void getById(int id) {
-
+        
     }
 
     @Override

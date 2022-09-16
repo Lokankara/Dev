@@ -8,4 +8,5 @@ public interface Account {
 	int getId();
 	double getBalance();
 	double maximumAmountToWithdraw();
+	int decimalValue();
 }

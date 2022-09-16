@@ -2,6 +2,7 @@ package com.luxoft.bank.domain;
 
 import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
+import java.time.temporal.Temporal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -67,7 +68,6 @@ public class Client {
         }
     }
 
-
     @Override
     public String toString() {
         return getClientGreeting();
@@ -79,13 +79,15 @@ public class Client {
 
     public long daysUntilBirthday() {
         LocalDate today = LocalDate.now();
-        long daysInBetween = ChronoUnit.DAYS.between(today, LocalDate.of(today.getYear(), birthday.getMonth(), birthday.getDayOfMonth()));
+        Temporal temporal = LocalDate.of(today.getYear(), birthday.getMonth(), birthday.getDayOfMonth());
+
+        long daysInBetween = ChronoUnit.DAYS.between(today, temporal);
         if (daysInBetween < 0) {
             daysInBetween += 365;
         }
+
         return daysInBetween;
     }
-
     public int getBirthdayMonth() {
         return birthday.getMonth().getValue();
     }
